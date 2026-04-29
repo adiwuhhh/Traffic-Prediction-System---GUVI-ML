@@ -151,7 +151,3 @@ POST /predict
 | API | [FastAPI](https://fastapi.tiangolo.com/) + Uvicorn |
 
 ---
-
-## License
-
-MIT
