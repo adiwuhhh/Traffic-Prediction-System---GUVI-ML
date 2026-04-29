@@ -1,0 +1,27 @@
+Traffic Situation Classifier — Training Report
+======================================================
+Best model:  Gradient Boosting
+CV F1 score: 0.9832 (5-fold stratified)
+
+Features used:
+  Hour, Minute, IsWeekend, CarCount, BikeCount, BusCount, TruckCount, car_frac, bike_frac, bus_frac, truck_frac, DayOrdinal
+
+Classification report (train set):
+              precision    recall  f1-score   support
+
+       heavy       1.00      1.00      1.00      1137
+        high       1.00      1.00      1.00       371
+         low       1.00      1.00      1.00       834
+      normal       1.00      1.00      1.00      3610
+
+    accuracy                           1.00      5952
+   macro avg       1.00      1.00      1.00      5952
+weighted avg       1.00      1.00      1.00      5952
+
+
+Confusion matrix (rows=actual, cols=predicted):
+  Classes: ['heavy', 'high', 'low', 'normal']
+[[1137    0    0    0]
+ [   0  371    0    0]
+ [   0    0  834    0]
+ [   0    0    0 3610]]

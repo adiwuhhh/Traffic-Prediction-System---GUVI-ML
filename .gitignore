@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+venv/
+.venv/
+env/
+
+# Model artifacts
+model.pkl
+
+# Generated data
+data/traffic_clean.csv
+
+# Plot outputs (regenerate with eda.py)
+assets/plots/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp

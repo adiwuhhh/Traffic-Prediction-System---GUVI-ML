@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Traffic EDA Dashboard</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="layout">
+
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="logo">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="1" y="1" width="7" height="7" rx="1.5" fill="#378ADD"/><rect x="10" y="1" width="7" height="7" rx="1.5" fill="#378ADD" opacity="0.5"/><rect x="1" y="10" width="7" height="7" rx="1.5" fill="#378ADD" opacity="0.5"/><rect x="10" y="10" width="7" height="7" rx="1.5" fill="#378ADD"/></svg>
+          <span class="logo-text">TrafficEDA</span>
+        </div>
+        <span class="topbar-divider"></span>
+        <span class="topbar-subtitle">Urban Traffic · 2-Month Analysis</span>
+      </div>
+      <div class="topbar-right">
+        <span class="badge badge-blue">5,952 intervals</span>
+        <span class="badge badge-gray">15-min cadence</span>
+        <a class="gh-link" href="https://github.com/" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+    </header>
+
+    <main class="main">
+
+      <div class="section-label">Key Metrics</div>
+      <div class="kpi-row" id="kpi-row"></div>
+
+      <div class="section-label" style="margin-top:28px;">Hourly Traffic Pattern</div>
+      <div class="panel" style="margin-bottom:16px;">
+        <div class="panel-header">
+          <span class="panel-title">Avg vehicles per 15-min slot by hour</span>
+          <div class="filter-row" id="day-filters"></div>
+        </div>
+        <div class="chart-wrap" style="height:200px;">
+          <canvas id="lineChart" role="img" aria-label="Line chart of average vehicle counts by hour of day. Morning peak at 6–8 AM around 164, evening peak at 4–5 PM around 177.">Average traffic peaks in the morning (6–8 AM) and evening (4–5 PM), dropping near 42 overnight.</canvas>
+        </div>
+      </div>
+
+      <div class="grid-main">
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title">Day × hour heatmap</span>
+            <span class="panel-hint">avg vehicles per slot</span>
+          </div>
+          <div id="heatmap-container"></div>
+          <div class="hm-legend" id="hm-legend"></div>
+        </div>
+
+        <div class="side-col">
+          <div class="panel" style="margin-bottom:14px;">
+            <div class="panel-header"><span class="panel-title">Traffic situation</span></div>
+            <div id="sit-bars"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><span class="panel-title">Vehicle mix</span></div>
+            <div class="donut-wrap">
+              <div style="position:relative;width:110px;height:110px;flex-shrink:0;">
+                <canvas id="donutChart" width="110" height="110" role="img" aria-label="Donut chart: Cars 60%, Trucks 17%, Buses 12%, Bikes 11%.">Cars 60%, Trucks 17%, Buses 12%, Bikes 11%.</canvas>
+              </div>
+              <div class="veh-legend" id="veh-legend"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-label" style="margin-top:16px;">Daily Trend</div>
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Avg vehicles per interval — by date</span>
+          <span class="panel-hint">stable baseline across the month</span>
+        </div>
+        <div class="chart-wrap" style="height:140px;">
+          <canvas id="dailyChart" role="img" aria-label="Bar chart of average vehicle counts per day. Values range from 105 to 113, showing a stable baseline across 31 days.">Daily averages are stable between 105 and 113 over 31 days.</canvas>
+        </div>
+      </div>
+
+      <div class="section-label" style="margin-top:24px;">Insights</div>
+      <div class="insights-grid">
+        <div class="insight-card">
+          <div class="insight-icon insight-icon-amber">&#9650;</div>
+          <div>
+            <div class="insight-title">Double rush peaks</div>
+            <div class="insight-body">Clear bimodal pattern — morning surge at 6–8 AM and stronger evening peak at 4–5 PM. Overnight (10 PM – 4 AM) drops to ~42 avg.</div>
+          </div>
+        </div>
+        <div class="insight-card">
+          <div class="insight-icon insight-icon-blue">&#9632;</div>
+          <div>
+            <div class="insight-title">Friday anomaly</div>
+            <div class="insight-body">Friday's peak shifts to midday (9 AM–2 PM, avg 207) instead of evening. Likely a weekly market or event effect in the source area.</div>
+          </div>
+        </div>
+        <div class="insight-card">
+          <div class="insight-icon insight-icon-teal">&#9679;</div>
+          <div>
+            <div class="insight-title">Cars dominate at 60%</div>
+            <div class="insight-body">Trucks are the second-largest class at 17%, higher than buses and bikes combined — suggesting freight routes overlap with commuter roads.</div>
+          </div>
+        </div>
+        <div class="insight-card">
+          <div class="insight-icon insight-icon-red">&#9646;</div>
+          <div>
+            <div class="insight-title">Normal conditions prevail</div>
+            <div class="insight-body">61% of all intervals are Normal. Heavy traffic occurs in 19% of slots — concentrated in morning and evening rush windows.</div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <footer class="footer">
+      <span>Data collected via computer vision model · 4 vehicle classes · 15-min intervals</span>
+      <span>Built with Chart.js · <a href="src/preprocess.py">preprocess.py</a> · <a href="src/eda.py">eda.py</a></span>
+    </footer>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <script src="assets/dashboard.js"></script>
+</body>
+</html>
